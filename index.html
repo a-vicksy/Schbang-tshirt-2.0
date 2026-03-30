@@ -208,9 +208,8 @@
       position: absolute;
       top: 0;
       bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100vw;
+      left: calc(var(--margin) * -1);
+      right: calc(var(--margin) * -1);
       z-index: 0;
     }
 
@@ -499,6 +498,21 @@
 
     .gallery-item:hover img {
       transform: scale(1.04);
+    }
+
+    .gallery-item .img-tag {
+      position: absolute;
+      bottom: 12px;
+      left: 12px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      padding: 6px 10px;
+      border-radius: 4px;
+      color: var(--gray-300);
     }
 
     /* Lightbox */
@@ -1075,7 +1089,7 @@
   <!-- ═══ HERO ═══ -->
   <section class="hero container">
     <div class="hero-bg">
-      <img src="images/common/1.png" alt="" aria-hidden="true">
+      <img src="images/common/3.png" alt="" aria-hidden="true">
     </div>
     <div class="hero-content">
       <div class="hero-eyebrow">Limited Edition — 2026</div>
@@ -1300,7 +1314,7 @@
     // ═══════════════════════════════════════════════════════
     
     // ⚠️ PASTE YOUR DEPLOYED APPS SCRIPT URL HERE
-    const API_URL = 'https://script.google.com/macros/s/AKfycbwccPS0O9MOxKOUtv-Xc_qEdkqjDaaEuP2YTFRhib6PSesZ5Y3TQvcRcroUiCnYWNYq/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbySh9ecP460BQs3qQo00F__0ueDAzmUlHnX8F5IhPESNomzvfYP6tOp1I8IHNK6MSiQ/exec';
 
     const DEADLINE = new Date('2026-04-30T23:59:59+05:30');
 
@@ -1412,7 +1426,10 @@
       const allImages = [...fitImages, ...commonImages];
 
       grid.innerHTML = allImages.map((img, i) => `
-        
+        <div class="gallery-item" onclick="openLightbox('${img.src}')">
+          <img src="${img.src}" alt="${img.tag}" loading="lazy">
+          <span class="img-tag">${img.tag}</span>
+        </div>
       `).join('');
 
       // Oversized note
