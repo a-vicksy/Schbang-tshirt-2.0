@@ -219,7 +219,7 @@
       height: 100%;
       object-fit: cover;
       object-position: center 30%;
-      filter: brightness(0.45) contrast(1.1);
+      filter: brightness(0.6) contrast(1.05);
     }
 
     .hero-bg::after {
@@ -227,8 +227,8 @@
       position: absolute;
       inset: 0;
       background: 
-        linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0.5) 100%),
-        linear-gradient(to right, rgba(0,0,0,0.6) 0%, transparent 60%);
+        linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.1) 70%, rgba(0,0,0,0.3) 100%),
+        linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -248,13 +248,15 @@
 
     .hero-title {
       font-family: var(--font-display);
-      font-size: clamp(48px, 8vw, 120px);
+      font-size: clamp(36px, 8vw, 120px);
       font-weight: 800;
       line-height: 0.95;
       letter-spacing: -0.03em;
       text-transform: uppercase;
       margin-bottom: 32px;
       text-shadow: 0 4px 40px rgba(0,0,0,0.5);
+      overflow-wrap: break-word;
+      word-break: break-word;
     }
 
     .hero-title .outline {
@@ -367,6 +369,19 @@
       top: 0; left: 0;
       width: 100%; height: 100%;
       border: none;
+    }
+
+    @media (max-width: 768px) {
+      .video-wrapper {
+        overflow: hidden;
+      }
+      .video-wrapper iframe {
+        width: 160%;
+        height: 160%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
     }
 
     /* ═══════════════════════════════════════════════════════
@@ -569,6 +584,7 @@
       overflow-x: auto;
       border: 1px solid var(--gray-800);
       border-radius: 8px;
+      -webkit-overflow-scrolling: touch;
     }
 
     .chart-table {
@@ -576,6 +592,7 @@
       border-collapse: collapse;
       font-family: var(--font-mono);
       font-size: 14px;
+      table-layout: fixed;
     }
 
     .chart-table thead {
@@ -583,8 +600,8 @@
     }
 
     .chart-table th {
-      padding: 16px 24px;
-      text-align: left;
+      padding: 16px 12px;
+      text-align: center;
       font-weight: 500;
       font-size: 11px;
       letter-spacing: 0.12em;
@@ -592,12 +609,14 @@
       color: var(--gray-400);
       border-bottom: 1px solid var(--gray-800);
       white-space: nowrap;
+      width: 25%;
     }
 
     .chart-table td {
-      padding: 16px 24px;
+      padding: 16px 12px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
       color: var(--gray-200);
+      text-align: center;
     }
 
     .chart-table tbody tr {
@@ -639,6 +658,8 @@
     .form-container {
       max-width: 560px;
       position: relative;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .form-step {
@@ -664,6 +685,7 @@
       display: flex;
       gap: 8px;
       margin-bottom: 48px;
+      justify-content: center;
     }
 
     .step-dot {
@@ -689,6 +711,7 @@
       font-weight: 700;
       letter-spacing: -0.01em;
       margin-bottom: 8px;
+      text-align: center;
     }
 
     .form-sublabel {
@@ -696,6 +719,7 @@
       color: var(--gray-400);
       margin-bottom: 32px;
       line-height: 1.6;
+      text-align: center;
     }
 
     .input-group {
@@ -715,6 +739,7 @@
       letter-spacing: 0.02em;
       outline: none;
       transition: border-color 0.3s ease;
+      text-align: center;
     }
 
     .input-field::placeholder {
@@ -735,6 +760,7 @@
       color: var(--gray-500);
       margin-top: 8px;
       letter-spacing: 0.02em;
+      text-align: center;
     }
 
     .input-error {
@@ -743,6 +769,7 @@
       color: #ff4444;
       margin-top: 8px;
       display: none;
+      text-align: center;
     }
 
     .input-error.visible {
@@ -766,6 +793,7 @@
     .fetched-name.visible {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 12px;
       animation: fadeIn 0.3s ease;
     }
@@ -873,6 +901,9 @@
       grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
       gap: 8px;
       margin-bottom: 32px;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .size-btn {
@@ -902,6 +933,7 @@
       display: flex;
       gap: 8px;
       margin-bottom: 24px;
+      justify-content: center;
     }
 
     .otp-digit {
@@ -1028,9 +1060,10 @@
       .timer-block { min-width: 40px; padding: 5px 8px; }
       .timer-block .value { font-size: 14px; }
 
-      .hero { padding-bottom: 60px; min-height: 80vh; }
+      .hero { padding-bottom: 60px; min-height: 85vh; }
       .hero-title { margin-bottom: 24px; }
       .hero-subtitle { font-size: 14px; }
+      .hero-eyebrow { font-size: 10px; margin-bottom: 16px; }
 
       .gallery-section, .sizechart-section, .form-section { padding-top: 80px; padding-bottom: 80px; }
 
@@ -1044,6 +1077,48 @@
       .otp-digit { width: 44px; height: 52px; font-size: 18px; }
 
       .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
+
+      /* Size chart mobile - no horizontal scroll */
+      .chart-table-wrap { overflow-x: visible; }
+      .chart-table { font-size: 12px; }
+      .chart-table th { 
+        padding: 12px 6px; 
+        font-size: 9px; 
+        letter-spacing: 0.06em;
+        white-space: normal;
+        word-break: break-word;
+      }
+      .chart-table td { padding: 12px 6px; font-size: 12px; }
+      .chart-table .size-cell { font-size: 13px; }
+
+      /* Form section mobile */
+      .form-section .section-header { text-align: center; }
+      .form-label { font-size: 20px; }
+      .form-sublabel { font-size: 13px; }
+      .input-field { font-size: 14px; padding: 14px 16px; }
+      .btn-submit { font-size: 13px; padding: 16px 24px; }
+
+      /* Lightbox mobile */
+      .lightbox { padding: 20px; }
+      .lightbox img { max-width: 100%; }
+
+      /* Section titles mobile */
+      .section-title { font-size: clamp(28px, 6vw, 56px); }
+
+      /* Success state mobile */
+      .success-title { font-size: 24px; }
+      .success-details { font-size: 14px; }
+    }
+
+    @media (max-width: 400px) {
+      .hero-title { font-size: 32px; }
+      .otp-digit { width: 38px; height: 46px; font-size: 16px; }
+      .otp-inputs { gap: 5px; }
+      .timer-block { min-width: 36px; padding: 4px 6px; }
+      .timer-block .value { font-size: 12px; }
+      .timer-sep { font-size: 12px; }
+      .chart-table th { font-size: 8px; padding: 10px 4px; }
+      .chart-table td { padding: 10px 4px; font-size: 11px; }
     }
   </style>
 </head>
@@ -1086,11 +1161,7 @@
       <p class="hero-subtitle">
         The official Schbang tee is here. Explore the drop, check the fit, pick your size — and claim yours before time runs out.
       </p>
-      <div class="hero-cta">
-        <a href="#claim" class="btn-primary">
-          Claim Your Tee <span class="arrow">→</span>
-        </a>
-      </div>
+      <!-- CTA removed -->
     </div>
     <div class="scroll-indicator">
       <span>Scroll</span>
@@ -1176,7 +1247,7 @@
 
   <!-- ═══ CLAIM FORM ═══ -->
   <section class="form-section container" id="claim">
-    <div class="section-header reveal">
+    <div class="section-header reveal" style="text-align: center;">
       <h2 class="section-title">Claim Yours</h2>
     </div>
     <div class="form-container reveal reveal-delay-1">
@@ -1193,7 +1264,7 @@
         <div class="form-label">Employee Code</div>
         <div class="form-sublabel">Enter your Schbang employee code to get started.</div>
         <div class="input-group">
-          <input type="text" class="input-field" id="inp-empcode" placeholder="e.g. SDSPL001" autocomplete="off" spellcheck="false">
+          <input type="text" class="input-field" id="inp-empcode" placeholder="e.g. SDSPLXXX" autocomplete="off" spellcheck="false" style="text-transform: uppercase;">
           <div class="input-hint">Found on your ID card or HR portal</div>
           <div class="input-error" id="err-empcode"></div>
         </div>
@@ -1250,7 +1321,7 @@
           </div>
         </div>
 
-        <div class="oversized-note" id="form-oversized-note" style="margin-bottom: 24px;">
+        <div class="oversized-note" id="form-oversized-note" style="margin-bottom: 24px; text-align: center;">
           ⬇ We recommend going <strong>one size down</strong> from your usual for oversized.
         </div>
 
@@ -1431,6 +1502,9 @@
         }
       });
       renderGallery();
+
+      // Sync size chart to match lookbook selection
+      setChart(fit);
     }
 
     function setGender(gender) {
@@ -1535,7 +1609,8 @@
 
     // ─── Step 1: Lookup ────────────────────────────────────
     async function handleLookup() {
-      const empCode = document.getElementById('inp-empcode').value.trim();
+      const empCode = document.getElementById('inp-empcode').value.trim().toUpperCase();
+      document.getElementById('inp-empcode').value = empCode;
       if (!empCode) {
         showError('err-empcode', 'Please enter your employee code');
         return;
@@ -1549,18 +1624,29 @@
 
         if (data.success) {
           if (data.alreadySubmitted) {
-            showError('err-empcode', `You've already submitted: ${data.existingFit} — ${data.existingSize}. Contact HR to change.`);
-            setLoading('btn-lookup', false);
-            return;
+            const changeCount = data.changeCount || 0;
+            if (changeCount >= 5) {
+              showError('err-empcode', `You've reached the maximum of 5 changes. Your current selection: ${data.existingFit} — ${data.existingSize}.`);
+              setLoading('btn-lookup', false);
+              return;
+            }
+            // Allow re-selection — show existing choice and let them continue
+            formState.empCode = data.empCode;
+            formState.name = data.name;
+
+            document.getElementById('fetched-name-text').textContent = `${data.name} — Currently: ${data.existingFit} ${data.existingSize} (${5 - changeCount} change${5 - changeCount === 1 ? '' : 's'} remaining)`;
+            document.getElementById('fetched-name').classList.add('visible');
+            document.getElementById('btn-lookup').textContent = 'Change Selection';
+            document.getElementById('btn-lookup').onclick = () => goToStep(2);
+          } else {
+            formState.empCode = data.empCode;
+            formState.name = data.name;
+
+            document.getElementById('fetched-name-text').textContent = data.name;
+            document.getElementById('fetched-name').classList.add('visible');
+            document.getElementById('btn-lookup').textContent = 'Continue';
+            document.getElementById('btn-lookup').onclick = () => goToStep(2);
           }
-
-          formState.empCode = data.empCode;
-          formState.name = data.name;
-
-          document.getElementById('fetched-name-text').textContent = data.name;
-          document.getElementById('fetched-name').classList.add('visible');
-          document.getElementById('btn-lookup').textContent = 'Continue';
-          document.getElementById('btn-lookup').onclick = () => goToStep(2);
         } else {
           showError('err-empcode', data.error);
         }
@@ -1749,14 +1835,29 @@
           action: 'submit',
           empCode: formState.empCode,
           size: formState.size,
-          fit: formState.fit
+          fit: formState.fit,
+          email: formState.email
         });
 
         if (data.success) {
+          // Send confirmation email
+          try {
+            await apiCall({
+              action: 'sendConfirmation',
+              email: formState.email,
+              name: formState.name || data.name,
+              empCode: formState.empCode,
+              fit: data.fit,
+              size: data.size
+            });
+          } catch (emailErr) {
+            console.warn('Confirmation email could not be sent:', emailErr);
+          }
+
           document.getElementById('success-details').innerHTML = `
             <strong>${data.name}</strong><br>
             ${data.fit} Fit — Size ${data.size}<br><br>
-            <span style="color: var(--gray-500); font-size: 13px;">Your preference has been saved. You'll receive your tee soon.</span>
+            <span style="color: var(--gray-500); font-size: 13px;">Your preference has been saved. A confirmation email has been sent to <strong style="color:var(--gray-300);">${formState.email}</strong>.<br>You can change your selection up to 5 times by revisiting this page and re-verifying.</span>
           `;
           goToStep('success');
           // Hide step indicator
@@ -1789,6 +1890,12 @@
     // ═══════════════════════════════════════════════════════
     document.getElementById('inp-empcode').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') handleLookup();
+    });
+
+    document.getElementById('inp-empcode').addEventListener('input', (e) => {
+      const cursorPos = e.target.selectionStart;
+      e.target.value = e.target.value.toUpperCase();
+      e.target.setSelectionRange(cursorPos, cursorPos);
     });
 
     document.getElementById('inp-email').addEventListener('keydown', (e) => {
