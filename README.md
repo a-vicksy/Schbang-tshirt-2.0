@@ -109,13 +109,20 @@ Two datasets in `SIZE_DATA` — `regular` (XS–XXL) and `oversized` (XS–3XL).
 
 ---
 
-## Google Sheet Schema (Expected)
+## Google Sheet Schema
 
-The Apps Script expects a sheet with at least these columns:
+The Apps Script reads from a sheet with these columns:
 
-| Employee Code | Name | Email | Fit | Size | Change Count | Timestamp |
-|---|---|---|---|---|---|---|
-| SDSPL001 | Jane Doe | jane@schbang.com | Regular | M | 1 | 2026-04-01T... |
+| Employee No | Employee Name | Location | DOJ | Emp Type | Tshirt Size | Fit | ChangeCount |
+|---|---|---|---|---|---|---|---|
+| SDSPL001 | Jane Doe | Mumbai | 2023-06-15 | Full-Time | M | Regular | 1 |
+
+- **Employee No** — the code users enter at Step 1 (matched against this column for lookup)
+- **Employee Name** — returned to the frontend after a successful lookup
+- **Location / DOJ / Emp Type** — employee metadata; not surfaced in the UI but available for internal filtering
+- **Tshirt Size** — written on submit (XS through 3XL)
+- **Fit** — written on submit (`Regular` or `Oversized`)
+- **ChangeCount** — incremented each time an employee re-submits; locked at 5
 
 OTPs are stored temporarily (likely in a separate sheet or Script Properties) and expire after verification.
 
