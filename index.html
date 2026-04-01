@@ -42,6 +42,9 @@
 
       --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
       --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+      /* ── APPS SCRIPT URL ── */
+      --api-url: 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
     }
 
     @media (max-width: 1024px) { :root { --margin: 40px; } }
@@ -198,7 +201,7 @@
       padding-bottom: 80px;
       padding-top: 100px;
       position: relative;
-      /* NO overflow: hidden — let the bg fill naturally */
+      overflow: hidden;
     }
 
     .hero-bg {
@@ -1143,7 +1146,7 @@
   </nav>
 
 
-  <!-- ═══ HERO — no .container on the section itself ═══ -->
+  <!-- ═══ HERO ═══ -->
   <section class="hero">
     <div class="hero-bg">
       <img src="images/common/1.png" alt="" aria-hidden="true">
@@ -1157,6 +1160,7 @@
       <p class="hero-subtitle">
         The official Schbang tee is here. Explore the drop, check the fit, pick your size — and claim yours before time runs out.
       </p>
+      <!-- CTA removed -->
     </div>
     <div class="scroll-indicator">
       <span>Scroll</span>
@@ -1365,7 +1369,8 @@
     // CONFIGURATION
     // ═══════════════════════════════════════════════════════
     
-    const API_URL = 'https://script.google.com/macros/s/AKfycbxcniy8ehL6TEbk4Aq15m0OpcsXivte8MSDt9Xz9JWpT1U8W44iTVMVpOxQC_LhjMdD/exec';
+    // ⚠️ PASTE YOUR DEPLOYED APPS SCRIPT URL HERE
+    const API_URL = 'https://script.google.com/macros/s/AKfycbw7Ik8wq3j2Bb43s3PfumbVi1XBH35At4-EqXwxdNXRQa7KzOfgb8BbIXdAXamVmx9a/exec';
 
     const DEADLINE = new Date('2026-04-30T23:59:59+05:30');
 
@@ -1483,6 +1488,7 @@
         </div>
       `).join('');
 
+      // Oversized note
       const note = document.getElementById('oversized-note');
       note.classList.toggle('visible', currentFit === 'oversized');
     }
@@ -1495,6 +1501,8 @@
         }
       });
       renderGallery();
+
+      // Sync size chart to match lookbook selection
       setChart(fit);
     }
 
@@ -1592,6 +1600,8 @@
         const res = await fetch(url, { redirect: 'follow' });
         return await res.json();
       } catch (err) {
+        // Google Apps Script sometimes returns opaque redirect
+        // Try with no-cors as fallback
         throw new Error('Network error. Please check your connection and try again.');
       }
     }
@@ -1619,6 +1629,7 @@
               setLoading('btn-lookup', false);
               return;
             }
+            // Allow re-selection — show existing choice and let them continue
             formState.empCode = data.empCode;
             formState.name = data.name;
 
@@ -1668,6 +1679,7 @@
           document.getElementById('otp-sent-email').textContent = email;
           goToStep(3);
           startResendTimer();
+          // Focus first OTP digit
           setTimeout(() => document.querySelector('.otp-digit').focus(), 300);
         } else {
           showError('err-email', data.error);
@@ -1687,6 +1699,7 @@
         if (val && idx < arr.length - 1) {
           arr[idx + 1].focus();
         }
+        // Auto-verify when all digits filled
         if (idx === arr.length - 1 && val) {
           const otp = Array.from(arr).map(i => i.value).join('');
           if (otp.length === 6) handleVerifyOtp();
@@ -1699,6 +1712,7 @@
         }
       });
 
+      // Handle paste
       input.addEventListener('paste', (e) => {
         e.preventDefault();
         const paste = (e.clipboardData.getData('text') || '').replace(/\D/g, '').slice(0, 6);
@@ -1751,6 +1765,7 @@
           goToStep(4);
         } else {
           showError('err-otp', data.error);
+          // Clear OTP inputs
           digits.forEach(d => d.value = '');
           digits[0].focus();
         }
@@ -1767,10 +1782,13 @@
       el.classList.add('selected');
       formState.fit = el.dataset.fit;
 
+      // Show/hide oversized note
       document.getElementById('form-oversized-note').classList.toggle('visible', formState.fit === 'Oversized');
 
+      // Render size buttons
       renderSizeButtons();
 
+      // Reset size selection
       formState.size = '';
       updateSubmitBtn();
     }
@@ -1821,6 +1839,7 @@
         });
 
         if (data.success) {
+          // Send confirmation email
           try {
             await apiCall({
               action: 'sendConfirmation',
@@ -1840,6 +1859,7 @@
             <span style="color: var(--gray-500); font-size: 13px;">Your preference has been saved. A confirmation email has been sent to <strong style="color:var(--gray-300);">${formState.email}</strong>.<br>You can change your selection up to 5 times by revisiting this page and re-verifying.</span>
           `;
           goToStep('success');
+          // Hide step indicator
           document.querySelector('.step-indicator').style.display = 'none';
         } else {
           showError('err-size', data.error);
