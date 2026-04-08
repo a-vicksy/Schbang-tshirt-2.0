@@ -1274,15 +1274,21 @@
         <button class="btn-submit" id="btn-lookup" onclick="handleLookup()">Look Me Up</button>
       </div>
 
-      <!-- STEP 2: Email & OTP -->
+      <!-- STEP 2: Confirm Email & Send OTP -->
       <div class="form-step" id="step-2">
-        <div class="form-label">Verify Your Email</div>
-        <div class="form-sublabel">We'll send a 6-digit OTP to your Schbang email to verify it's you.</div>
-        <div class="input-group">
-          <input type="email" class="input-field" id="inp-email" placeholder="name@schbang.com" autocomplete="off">
-          <div class="input-error" id="err-email"></div>
+        <div class="form-label">Verify It's You</div>
+        <div class="form-sublabel">We'll send a 6-digit OTP to the email on file for your employee code.</div>
+        <div class="fetched-name visible" id="masked-email-box" style="justify-content:center;">
+          <span class="check">✉</span>
+          <span id="masked-email-text"></span>
         </div>
+        <div class="input-error" id="err-email"></div>
         <button class="btn-submit" id="btn-sendotp" onclick="handleSendOtp()">Send OTP</button>
+        <div style="text-align:center;margin-top:16px;">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--gray-500);letter-spacing:0.05em;">
+            Not your email? Contact HR to update it.
+          </span>
+        </div>
       </div>
 
       <!-- STEP 3: Enter OTP -->
@@ -1370,7 +1376,7 @@
     // ═══════════════════════════════════════════════════════
     
     // ⚠️ PASTE YOUR DEPLOYED APPS SCRIPT URL HERE
-    const API_URL = 'https://script.google.com/macros/s/AKfycbw7Ik8wq3j2Bb43s3PfumbVi1XBH35At4-EqXwxdNXRQa7KzOfgb8BbIXdAXamVmx9a/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbz7WNfTRKgp_A-HZq25FV-zVKfYoRWoyuQWX89PLSxHnqlH3Gqjc-CEBPI1DQhjFHL-/exec';
 
     const DEADLINE = new Date('2026-04-30T23:59:59+05:30');
 
@@ -1441,7 +1447,7 @@
     let formState = {
       empCode: '',
       name: '',
-      email: '',
+      maskedEmail: '',
       fit: '',
       size: ''
     };
@@ -1632,17 +1638,21 @@
             // Allow re-selection — show existing choice and let them continue
             formState.empCode = data.empCode;
             formState.name = data.name;
+            formState.maskedEmail = data.maskedEmail;
 
             document.getElementById('fetched-name-text').textContent = `${data.name} — Currently: ${data.existingFit} ${data.existingSize} (${5 - changeCount} change${5 - changeCount === 1 ? '' : 's'} remaining)`;
             document.getElementById('fetched-name').classList.add('visible');
+            document.getElementById('masked-email-text').textContent = data.maskedEmail;
             document.getElementById('btn-lookup').textContent = 'Change Selection';
             document.getElementById('btn-lookup').onclick = () => goToStep(2);
           } else {
             formState.empCode = data.empCode;
             formState.name = data.name;
+            formState.maskedEmail = data.maskedEmail;
 
             document.getElementById('fetched-name-text').textContent = data.name;
             document.getElementById('fetched-name').classList.add('visible');
+            document.getElementById('masked-email-text').textContent = data.maskedEmail;
             document.getElementById('btn-lookup').textContent = 'Continue';
             document.getElementById('btn-lookup').onclick = () => goToStep(2);
           }
@@ -1658,28 +1668,16 @@
 
     // ─── Step 2: Send OTP ──────────────────────────────────
     async function handleSendOtp() {
-      const email = document.getElementById('inp-email').value.trim();
-      if (!email) {
-        showError('err-email', 'Please enter your email');
-        return;
-      }
-      if (!email.toLowerCase().endsWith('@schbang.com')) {
-        showError('err-email', 'Please use your @schbang.com email');
-        return;
-      }
-
       clearError('err-email');
       setLoading('btn-sendotp', true);
 
       try {
-        const data = await apiCall({ action: 'sendOtp', email: email, empCode: formState.empCode });
+        const data = await apiCall({ action: 'sendOtp', empCode: formState.empCode });
 
         if (data.success) {
-          formState.email = email;
-          document.getElementById('otp-sent-email').textContent = email;
+          document.getElementById('otp-sent-email').textContent = formState.maskedEmail;
           goToStep(3);
           startResendTimer();
-          // Focus first OTP digit
           setTimeout(() => document.querySelector('.otp-digit').focus(), 300);
         } else {
           showError('err-email', data.error);
@@ -1759,8 +1757,7 @@
       setLoading('btn-verifyotp', true);
 
       try {
-        const data = await apiCall({ action: 'verifyOtp', email: formState.email, otp: otp });
-
+       const data = await apiCall({ action: 'verifyOtp', empCode: formState.empCode, otp: otp });
         if (data.success) {
           goToStep(4);
         } else {
@@ -1834,8 +1831,7 @@
           action: 'submit',
           empCode: formState.empCode,
           size: formState.size,
-          fit: formState.fit,
-          email: formState.email
+          fit: formState.fit
         });
 
         if (data.success) {
@@ -1843,8 +1839,6 @@
           try {
             await apiCall({
               action: 'sendConfirmation',
-              email: formState.email,
-              name: formState.name || data.name,
               empCode: formState.empCode,
               fit: data.fit,
               size: data.size
@@ -1856,7 +1850,7 @@
           document.getElementById('success-details').innerHTML = `
             <strong>${data.name}</strong><br>
             ${data.fit} Fit — Size ${data.size}<br><br>
-            <span style="color: var(--gray-500); font-size: 13px;">Your preference has been saved. A confirmation email has been sent to <strong style="color:var(--gray-300);">${formState.email}</strong>.<br>You can change your selection up to 5 times by revisiting this page and re-verifying.</span>
+            <span style="color: var(--gray-500); font-size: 13px;">Your preference has been saved. A confirmation email has been sent to <strong style="color:var(--gray-300);">${formState.maskedEmail}</strong>.<br>You can change your selection up to 5 times by revisiting this page and re-verifying.</span>
           `;
           goToStep('success');
           // Hide step indicator
