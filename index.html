@@ -1,32 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Schbang Tee — Claim Yours</title>
   <meta name="description" content="The official Schbang tee drop. Choose your fit, pick your size.">
-  <link rel="icon" type="image/png" href="assets/SchbangLogo.png">
-  <link rel="apple-touch-icon" href="assets/SchbangLogo.png">
-
+  
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=Gotu&family=DM+Mono:wght@400;500&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=Gotu&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     /* ═══════════════════════════════════════════════════════
        RESET & VARIABLES
        ═══════════════════════════════════════════════════════ */
-    *,
-    *::before,
-    *::after {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
       --black: #000000;
@@ -58,17 +47,8 @@
       --api-url: 'PASTE_YOUR_APPS_SCRIPT_URL_HERE';
     }
 
-    @media (max-width: 1024px) {
-      :root {
-        --margin: 40px;
-      }
-    }
-
-    @media (max-width: 768px) {
-      :root {
-        --margin: 20px;
-      }
-    }
+    @media (max-width: 1024px) { :root { --margin: 40px; } }
+    @media (max-width: 768px) { :root { --margin: 20px; } }
 
     html {
       scroll-behavior: smooth;
@@ -90,24 +70,9 @@
       color: var(--black);
     }
 
-    img {
-      display: block;
-      max-width: 100%;
-      height: auto;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font-family: inherit;
-      cursor: pointer;
-      border: none;
-      background: none;
-      color: inherit;
-    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 
     /* ═══════════════════════════════════════════════════════
        GRID SYSTEM — 12 columns, 80px margins
@@ -214,15 +179,8 @@
     }
 
     @keyframes blink {
-
-      0%,
-      100% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0.3;
-      }
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
     .timer-expired {
@@ -267,9 +225,9 @@
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.25) 40%, rgba(0, 0, 0, 0.1) 70%, rgba(0, 0, 0, 0.3) 100%),
-        linear-gradient(to right, rgba(0, 0, 0, 0.4) 0%, transparent 60%);
+      background: 
+        linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.25) 40%, rgba(0,0,0,0.1) 70%, rgba(0,0,0,0.3) 100%),
+        linear-gradient(to right, rgba(0,0,0,0.4) 0%, transparent 60%);
       pointer-events: none;
     }
 
@@ -283,7 +241,7 @@
       font-size: 11px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255,255,255,0.6);
       margin-bottom: 24px;
     }
 
@@ -295,7 +253,7 @@
       letter-spacing: -0.03em;
       text-transform: uppercase;
       margin-bottom: 32px;
-      text-shadow: 0 4px 40px rgba(0, 0, 0, 0.5);
+      text-shadow: 0 4px 40px rgba(0,0,0,0.5);
       overflow-wrap: break-word;
       word-break: break-word;
     }
@@ -308,7 +266,7 @@
     .hero-subtitle {
       font-family: var(--font-body);
       font-size: 16px;
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255,255,255,0.6);
       max-width: 480px;
       line-height: 1.7;
     }
@@ -369,45 +327,25 @@
       font-size: 9px;
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      color: rgba(255, 255, 255, 0.4);
+      color: rgba(255,255,255,0.4);
     }
 
     .scroll-line {
       width: 1px;
       height: 40px;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), transparent);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.4), transparent);
       animation: scrollPulse 2s ease-in-out infinite;
     }
 
     @keyframes float {
-
-      0%,
-      100% {
-        transform: translateX(-50%) translateY(0);
-      }
-
-      50% {
-        transform: translateX(-50%) translateY(8px);
-      }
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
     }
 
     @keyframes scrollPulse {
-      0% {
-        opacity: 0;
-        transform: scaleY(0);
-        transform-origin: top;
-      }
-
-      50% {
-        opacity: 1;
-        transform: scaleY(1);
-      }
-
-      100% {
-        opacity: 0;
-        transform: scaleY(0);
-        transform-origin: bottom;
-      }
+      0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+      50% { opacity: 1; transform: scaleY(1); }
+      100% { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
     }
 
     /* ═══════════════════════════════════════════════════════
@@ -427,10 +365,8 @@
 
     .video-wrapper iframe {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
       border: none;
     }
 
@@ -438,7 +374,6 @@
       .video-wrapper {
         overflow: hidden;
       }
-
       .video-wrapper iframe {
         width: 160%;
         height: 160%;
@@ -553,15 +488,11 @@
     }
 
     @media (max-width: 768px) {
-      .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
     }
 
     @media (max-width: 480px) {
-      .gallery-grid {
-        grid-template-columns: 1fr;
-      }
+      .gallery-grid { grid-template-columns: 1fr; }
     }
 
     .gallery-item {
@@ -620,13 +551,13 @@
       justify-content: center;
       font-size: 24px;
       color: var(--white);
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255,255,255,0.1);
       border-radius: 50%;
       transition: background 0.2s;
     }
 
     .lightbox-close:hover {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255,255,255,0.2);
     }
 
     /* ═══════════════════════════════════════════════════════
@@ -717,11 +648,9 @@
     .form-section::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       height: 400px;
-      background: radial-gradient(ellipse at 50% 0%, rgba(255, 255, 255, 0.02), transparent 70%);
+      background: radial-gradient(ellipse at 50% 0%, rgba(255,255,255,0.02), transparent 70%);
       pointer-events: none;
     }
 
@@ -742,25 +671,13 @@
     }
 
     @keyframes fadeSlideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
 
     .step-indicator {
@@ -926,10 +843,8 @@
     .btn-submit.loading::after {
       content: '';
       position: absolute;
-      width: 20px;
-      height: 20px;
-      top: 50%;
-      left: 50%;
+      width: 20px; height: 20px;
+      top: 50%; left: 50%;
       margin: -10px 0 0 -10px;
       border: 2px solid transparent;
       border-top-color: var(--black);
@@ -938,9 +853,7 @@
     }
 
     @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
+      to { transform: rotate(360deg); }
     }
 
     /* Fit & Size Selection */
@@ -1051,14 +964,8 @@
       border: none;
     }
 
-    .resend-link:hover {
-      color: var(--white);
-    }
-
-    .resend-link:disabled {
-      color: var(--gray-700);
-      cursor: not-allowed;
-    }
+    .resend-link:hover { color: var(--white); }
+    .resend-link:disabled { color: var(--gray-700); cursor: not-allowed; }
 
     /* Success State */
     .success-state {
@@ -1081,13 +988,8 @@
     }
 
     @keyframes scaleIn {
-      from {
-        transform: scale(0);
-      }
-
-      to {
-        transform: scale(1);
-      }
+      from { transform: scale(0); }
+      to { transform: scale(1); }
     }
 
     .success-title {
@@ -1143,213 +1045,79 @@
       transform: translateY(0);
     }
 
-    .reveal-delay-1 {
-      transition-delay: 0.1s;
-    }
-
-    .reveal-delay-2 {
-      transition-delay: 0.2s;
-    }
-
-    .reveal-delay-3 {
-      transition-delay: 0.3s;
-    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
 
     /* ═══════════════════════════════════════════════════════
        RESPONSIVE
        ═══════════════════════════════════════════════════════ */
     @media (max-width: 768px) {
-      .navbar-inner {
-        padding: 16px var(--margin);
-      }
+      .navbar-inner { padding: 16px var(--margin); }
+      .navbar-logo img { height: 22px; }
+      .timer-label { display: none; }
+      .timer-block { min-width: 40px; padding: 5px 8px; }
+      .timer-block .value { font-size: 14px; }
 
-      .navbar-logo img {
-        height: 22px;
-      }
+      .hero { padding-bottom: 60px; min-height: 85vh; }
+      .hero-title { margin-bottom: 24px; }
+      .hero-subtitle { font-size: 14px; }
+      .hero-eyebrow { font-size: 10px; margin-bottom: 16px; }
 
-      .timer-label {
-        display: none;
-      }
+      .gallery-section, .sizechart-section, .form-section { padding-top: 80px; padding-bottom: 80px; }
 
-      .timer-block {
-        min-width: 40px;
-        padding: 5px 8px;
-      }
+      .gallery-controls { gap: 16px; }
+      .toggle-group { width: 100%; }
+      .toggle-group label { display: none; }
+      .toggle-btn { flex: 1; text-align: center; padding: 10px 12px; font-size: 11px; }
 
-      .timer-block .value {
-        font-size: 14px;
-      }
+      .fit-options { grid-template-columns: 1fr; }
+      
+      .otp-digit { width: 44px; height: 52px; font-size: 18px; }
 
-      .hero {
-        padding-bottom: 60px;
-        min-height: 85vh;
-      }
-
-      .hero-title {
-        margin-bottom: 24px;
-      }
-
-      .hero-subtitle {
-        font-size: 14px;
-      }
-
-      .hero-eyebrow {
-        font-size: 10px;
-        margin-bottom: 16px;
-      }
-
-      .gallery-section,
-      .sizechart-section,
-      .form-section {
-        padding-top: 80px;
-        padding-bottom: 80px;
-      }
-
-      .gallery-controls {
-        gap: 16px;
-      }
-
-      .toggle-group {
-        width: 100%;
-      }
-
-      .toggle-group label {
-        display: none;
-      }
-
-      .toggle-btn {
-        flex: 1;
-        text-align: center;
-        padding: 10px 12px;
-        font-size: 11px;
-      }
-
-      .fit-options {
-        grid-template-columns: 1fr;
-      }
-
-      .otp-digit {
-        width: 44px;
-        height: 52px;
-        font-size: 18px;
-      }
-
-      .footer-inner {
-        flex-direction: column;
-        gap: 12px;
-        text-align: center;
-      }
+      .footer-inner { flex-direction: column; gap: 12px; text-align: center; }
 
       /* Size chart mobile - no horizontal scroll */
-      .chart-table-wrap {
-        overflow-x: visible;
-      }
-
-      .chart-table {
-        font-size: 12px;
-      }
-
-      .chart-table th {
-        padding: 12px 6px;
-        font-size: 9px;
+      .chart-table-wrap { overflow-x: visible; }
+      .chart-table { font-size: 12px; }
+      .chart-table th { 
+        padding: 12px 6px; 
+        font-size: 9px; 
         letter-spacing: 0.06em;
         white-space: normal;
         word-break: break-word;
       }
-
-      .chart-table td {
-        padding: 12px 6px;
-        font-size: 12px;
-      }
-
-      .chart-table .size-cell {
-        font-size: 13px;
-      }
+      .chart-table td { padding: 12px 6px; font-size: 12px; }
+      .chart-table .size-cell { font-size: 13px; }
 
       /* Form section mobile */
-      .form-section .section-header {
-        text-align: center;
-      }
-
-      .form-label {
-        font-size: 20px;
-      }
-
-      .form-sublabel {
-        font-size: 13px;
-      }
-
-      .input-field {
-        font-size: 14px;
-        padding: 14px 16px;
-      }
-
-      .btn-submit {
-        font-size: 13px;
-        padding: 16px 24px;
-      }
+      .form-section .section-header { text-align: center; }
+      .form-label { font-size: 20px; }
+      .form-sublabel { font-size: 13px; }
+      .input-field { font-size: 14px; padding: 14px 16px; }
+      .btn-submit { font-size: 13px; padding: 16px 24px; }
 
       /* Lightbox mobile */
-      .lightbox {
-        padding: 20px;
-      }
-
-      .lightbox img {
-        max-width: 100%;
-      }
+      .lightbox { padding: 20px; }
+      .lightbox img { max-width: 100%; }
 
       /* Section titles mobile */
-      .section-title {
-        font-size: clamp(28px, 6vw, 56px);
-      }
+      .section-title { font-size: clamp(28px, 6vw, 56px); }
 
       /* Success state mobile */
-      .success-title {
-        font-size: 24px;
-      }
-
-      .success-details {
-        font-size: 14px;
-      }
+      .success-title { font-size: 24px; }
+      .success-details { font-size: 14px; }
     }
 
     @media (max-width: 400px) {
-      .hero-title {
-        font-size: 32px;
-      }
-
-      .otp-digit {
-        width: 38px;
-        height: 46px;
-        font-size: 16px;
-      }
-
-      .otp-inputs {
-        gap: 5px;
-      }
-
-      .timer-block {
-        min-width: 36px;
-        padding: 4px 6px;
-      }
-
-      .timer-block .value {
-        font-size: 12px;
-      }
-
-      .timer-sep {
-        font-size: 12px;
-      }
-
-      .chart-table th {
-        font-size: 8px;
-        padding: 10px 4px;
-      }
-
-      .chart-table td {
-        padding: 10px 4px;
-        font-size: 11px;
-      }
+      .hero-title { font-size: 32px; }
+      .otp-digit { width: 38px; height: 46px; font-size: 16px; }
+      .otp-inputs { gap: 5px; }
+      .timer-block { min-width: 36px; padding: 4px 6px; }
+      .timer-block .value { font-size: 12px; }
+      .timer-sep { font-size: 12px; }
+      .chart-table th { font-size: 8px; padding: 10px 4px; }
+      .chart-table td { padding: 10px 4px; font-size: 11px; }
     }
   </style>
 </head>
@@ -1390,8 +1158,7 @@
         <span class="outline">Culture.</span>
       </h1>
       <p class="hero-subtitle">
-        The official Schbang tee is here. Explore the drop, check the fit, pick your size — and claim yours before time
-        runs out.
+        The official Schbang tee is here. Explore the drop, check the fit, pick your size — and claim yours before time runs out.
       </p>
       <!-- CTA removed -->
     </div>
@@ -1405,10 +1172,11 @@
   <!-- ═══ VIDEO ═══ -->
   <section class="video-section">
     <div class="video-wrapper">
-      <iframe
-        src="https://player.vimeo.com/video/1178578908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1"
-        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share"
-        referrerpolicy="strict-origin-when-cross-origin" title="Schbang Tshirt">
+      <iframe 
+        src="https://player.vimeo.com/video/1178578908?badge=0&autopause=0&player_id=0&app_id=58479&autoplay=1&muted=1&loop=1&background=1" 
+        allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
+        referrerpolicy="strict-origin-when-cross-origin" 
+        title="Schbang Tshirt">
       </iframe>
     </div>
   </section>
@@ -1428,14 +1196,13 @@
       </div>
       <div class="toggle-group">
         <label>View</label>
-        <button class="toggle-btn active" data-gender="male" onclick="setGender('male')">Masculine</button>
-        <button class="toggle-btn" data-gender="female" onclick="setGender('female')">Feminine</button>
+        <button class="toggle-btn active" data-gender="male" onclick="setGender('male')">Male</button>
+        <button class="toggle-btn" data-gender="female" onclick="setGender('female')">Female</button>
       </div>
     </div>
 
     <div class="oversized-note reveal reveal-delay-2" id="oversized-note">
-      ⬇ Since this is an oversized fit, we strongly recommend going <strong>one size down</strong> for a more structured
-      look.
+      ⬇ Since this is an oversized fit, we strongly recommend going <strong>one size down</strong> for a more structured look.
     </div>
 
     <div class="gallery-grid reveal reveal-delay-2" id="gallery-grid">
@@ -1496,8 +1263,7 @@
         <div class="form-label">Employee Code</div>
         <div class="form-sublabel">Enter your Schbang employee code to get started.</div>
         <div class="input-group">
-          <input type="text" class="input-field" id="inp-empcode" placeholder="e.g. SDSPLXXX" autocomplete="off"
-            spellcheck="false" style="text-transform: uppercase;">
+          <input type="text" class="input-field" id="inp-empcode" placeholder="e.g. SDSPLXXX" autocomplete="off" spellcheck="false" style="text-transform: uppercase;">
           <div class="input-hint">Found on your ID card or HR portal</div>
           <div class="input-error" id="err-empcode"></div>
         </div>
@@ -1508,22 +1274,27 @@
         <button class="btn-submit" id="btn-lookup" onclick="handleLookup()">Look Me Up</button>
       </div>
 
-      <!-- STEP 2: Email & OTP -->
+      <!-- STEP 2: Confirm Email & Send OTP -->
       <div class="form-step" id="step-2">
-        <div class="form-label">Verify Your Email</div>
-        <div class="form-sublabel">We'll send a 6-digit OTP to your Schbang email to verify it's you.</div>
-        <div class="input-group">
-          <input type="email" class="input-field" id="inp-email" placeholder="name@schbang.com" autocomplete="off">
-          <div class="input-error" id="err-email"></div>
+        <div class="form-label">Verify It's You</div>
+        <div class="form-sublabel">We'll send a 6-digit OTP to the email on file for your employee code.</div>
+        <div class="fetched-name visible" id="masked-email-box" style="justify-content:center;">
+          <span class="check">✉</span>
+          <span id="masked-email-text"></span>
         </div>
+        <div class="input-error" id="err-email"></div>
         <button class="btn-submit" id="btn-sendotp" onclick="handleSendOtp()">Send OTP</button>
+        <div style="text-align:center;margin-top:16px;">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--gray-500);letter-spacing:0.05em;">
+            Not your email? Contact HR to update it.
+          </span>
+        </div>
       </div>
 
       <!-- STEP 3: Enter OTP -->
       <div class="form-step" id="step-3">
         <div class="form-label">Enter OTP</div>
-        <div class="form-sublabel">Sent to <span id="otp-sent-email" style="color: var(--white);"></span>. Check your
-          inbox.</div>
+        <div class="form-sublabel">Sent to <span id="otp-sent-email" style="color: var(--white);"></span>. Check your inbox.</div>
         <div class="otp-inputs" id="otp-inputs">
           <input type="text" maxlength="1" class="otp-digit" data-idx="0" inputmode="numeric">
           <input type="text" maxlength="1" class="otp-digit" data-idx="1" inputmode="numeric">
@@ -1535,8 +1306,7 @@
         <div class="input-error" id="err-otp"></div>
         <button class="btn-submit" id="btn-verifyotp" onclick="handleVerifyOtp()">Verify</button>
         <div style="text-align: center; margin-top: 16px;">
-          <button class="resend-link" id="btn-resend" onclick="handleSendOtp()" disabled>Resend OTP in <span
-              id="resend-timer">30</span>s</button>
+          <button class="resend-link" id="btn-resend" onclick="handleSendOtp()" disabled>Resend OTP in <span id="resend-timer">30</span>s</button>
         </div>
       </div>
 
@@ -1560,8 +1330,7 @@
           ⬇ We recommend going <strong>one size down</strong> from your usual for oversized.
         </div>
 
-        <div class="form-sublabel"
-          style="margin-bottom: 16px; margin-top: 8px; font-weight: 500; color: var(--gray-300);">Select Size</div>
+        <div class="form-sublabel" style="margin-bottom: 16px; margin-top: 8px; font-weight: 500; color: var(--gray-300);">Select Size</div>
         <div class="size-grid" id="size-grid">
           <!-- Populated by JS based on fit selection -->
         </div>
@@ -1605,9 +1374,9 @@
     // ═══════════════════════════════════════════════════════
     // CONFIGURATION
     // ═══════════════════════════════════════════════════════
-
+    
     // ⚠️ PASTE YOUR DEPLOYED APPS SCRIPT URL HERE
-    const API_URL = 'https://script.google.com/macros/s/AKfycbw7Ik8wq3j2Bb43s3PfumbVi1XBH35At4-EqXwxdNXRQa7KzOfgb8BbIXdAXamVmx9a/exec';
+    const API_URL = 'https://script.google.com/macros/s/AKfycbz7WNfTRKgp_A-HZq25FV-zVKfYoRWoyuQWX89PLSxHnqlH3Gqjc-CEBPI1DQhjFHL-/exec';
 
     const DEADLINE = new Date('2026-04-30T23:59:59+05:30');
 
@@ -1652,20 +1421,20 @@
     const SIZE_DATA = {
       regular: [
         { size: 'XS', chest: '36.0', length: '27.0', shoulder: '16.5' },
-        { size: 'S', chest: '38.0', length: '27.0', shoulder: '17.0' },
-        { size: 'M', chest: '40.0', length: '27.0', shoulder: '17.5' },
-        { size: 'L', chest: '42.0', length: '27.5', shoulder: '18.0' },
+        { size: 'S',  chest: '38.0', length: '27.0', shoulder: '17.0' },
+        { size: 'M',  chest: '40.0', length: '27.0', shoulder: '17.5' },
+        { size: 'L',  chest: '42.0', length: '27.5', shoulder: '18.0' },
         { size: 'XL', chest: '44.0', length: '27.5', shoulder: '18.5' },
-        { size: 'XXL', chest: '46.0', length: '27.5', shoulder: '19.0' },
+        { size: 'XXL',chest: '46.0', length: '27.5', shoulder: '19.0' },
       ],
       oversized: [
         { size: 'XS', chest: '36.0', length: '26.0', shoulder: '16.5' },
-        { size: 'S', chest: '38.0', length: '26.0', shoulder: '17.0' },
-        { size: 'M', chest: '40.0', length: '27.0', shoulder: '17.5' },
-        { size: 'L', chest: '42.0', length: '27.0', shoulder: '18.0' },
+        { size: 'S',  chest: '38.0', length: '26.0', shoulder: '17.0' },
+        { size: 'M',  chest: '40.0', length: '27.0', shoulder: '17.5' },
+        { size: 'L',  chest: '42.0', length: '27.0', shoulder: '18.0' },
         { size: 'XL', chest: '44.0', length: '27.5', shoulder: '18.5' },
-        { size: 'XXL', chest: '46.0', length: '27.5', shoulder: '19.0' },
-        { size: '3XL', chest: '48.0', length: '28.0', shoulder: '19.5' },
+        { size: 'XXL',chest: '46.0', length: '27.5', shoulder: '19.0' },
+        { size: '3XL',chest: '48.0', length: '28.0', shoulder: '19.5' },
       ]
     };
 
@@ -1678,7 +1447,7 @@
     let formState = {
       empCode: '',
       name: '',
-      email: '',
+      maskedEmail: '',
       fit: '',
       size: ''
     };
@@ -1869,17 +1638,21 @@
             // Allow re-selection — show existing choice and let them continue
             formState.empCode = data.empCode;
             formState.name = data.name;
+            formState.maskedEmail = data.maskedEmail;
 
             document.getElementById('fetched-name-text').textContent = `${data.name} — Currently: ${data.existingFit} ${data.existingSize} (${5 - changeCount} change${5 - changeCount === 1 ? '' : 's'} remaining)`;
             document.getElementById('fetched-name').classList.add('visible');
+            document.getElementById('masked-email-text').textContent = data.maskedEmail;
             document.getElementById('btn-lookup').textContent = 'Change Selection';
             document.getElementById('btn-lookup').onclick = () => goToStep(2);
           } else {
             formState.empCode = data.empCode;
             formState.name = data.name;
+            formState.maskedEmail = data.maskedEmail;
 
             document.getElementById('fetched-name-text').textContent = data.name;
             document.getElementById('fetched-name').classList.add('visible');
+            document.getElementById('masked-email-text').textContent = data.maskedEmail;
             document.getElementById('btn-lookup').textContent = 'Continue';
             document.getElementById('btn-lookup').onclick = () => goToStep(2);
           }
@@ -1895,28 +1668,16 @@
 
     // ─── Step 2: Send OTP ──────────────────────────────────
     async function handleSendOtp() {
-      const email = document.getElementById('inp-email').value.trim();
-      if (!email) {
-        showError('err-email', 'Please enter your email');
-        return;
-      }
-      if (!email.toLowerCase().endsWith('@schbang.com')) {
-        showError('err-email', 'Please use your @schbang.com email');
-        return;
-      }
-
       clearError('err-email');
       setLoading('btn-sendotp', true);
 
       try {
-        const data = await apiCall({ action: 'sendOtp', email: email, empCode: formState.empCode });
+        const data = await apiCall({ action: 'sendOtp', empCode: formState.empCode });
 
         if (data.success) {
-          formState.email = email;
-          document.getElementById('otp-sent-email').textContent = email;
+          document.getElementById('otp-sent-email').textContent = formState.maskedEmail;
           goToStep(3);
           startResendTimer();
-          // Focus first OTP digit
           setTimeout(() => document.querySelector('.otp-digit').focus(), 300);
         } else {
           showError('err-email', data.error);
@@ -1996,8 +1757,7 @@
       setLoading('btn-verifyotp', true);
 
       try {
-        const data = await apiCall({ action: 'verifyOtp', email: formState.email, otp: otp });
-
+       const data = await apiCall({ action: 'verifyOtp', empCode: formState.empCode, otp: otp });
         if (data.success) {
           goToStep(4);
         } else {
@@ -2071,8 +1831,7 @@
           action: 'submit',
           empCode: formState.empCode,
           size: formState.size,
-          fit: formState.fit,
-          email: formState.email
+          fit: formState.fit
         });
 
         if (data.success) {
@@ -2080,8 +1839,6 @@
           try {
             await apiCall({
               action: 'sendConfirmation',
-              email: formState.email,
-              name: formState.name || data.name,
               empCode: formState.empCode,
               fit: data.fit,
               size: data.size
@@ -2093,7 +1850,7 @@
           document.getElementById('success-details').innerHTML = `
             <strong>${data.name}</strong><br>
             ${data.fit} Fit — Size ${data.size}<br><br>
-            <span style="color: var(--gray-500); font-size: 13px;">Your preference has been saved. A confirmation email has been sent to <strong style="color:var(--gray-300);">${formState.email}</strong>.<br>You can change your selection up to 5 times by revisiting this page and re-verifying.</span>
+            <span style="color: var(--gray-500); font-size: 13px;">Your preference has been saved. A confirmation email has been sent to <strong style="color:var(--gray-300);">${formState.maskedEmail}</strong>.<br>You can change your selection up to 5 times by revisiting this page and re-verifying.</span>
           `;
           goToStep('success');
           // Hide step indicator
@@ -2144,19 +1901,11 @@
     if (new Date() > DEADLINE) {
       document.querySelector('.form-container').innerHTML = `
         <div class="success-state">
-          <div class="success-icon" style="background: var(--gray-800); border: 2px solid var(--gray-700); color: var(--gray-400); width: 88px; height: 88px; font-size: 40px;">
-            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-            </svg>
-          </div>
-          <div class="success-title">Registrations Closed</div>
+          <div class="success-icon" style="background: var(--gray-700); color: var(--gray-400);">✕</div>
+          <div class="success-title">Submissions Closed</div>
           <div class="success-details">
-            The registration window for the Schbang tee has ended.<br>Thank you to everyone who participated!<br><br>
-            <span style="display: inline-block; background: var(--gray-800); border: 1px solid var(--gray-700); border-radius: 6px; padding: 8px 16px; font-family: var(--font-mono); font-size: 12px; color: var(--gray-400); letter-spacing: 0.05em;">
-              <span style="color: #ff4444;">Closed</span> — April 30, 2026 at 11:59 PM IST
-            </span><br><br>
-            <span style="font-family: var(--font-mono); font-size: 12px; color: var(--gray-500); letter-spacing: 0.05em;">Have questions? Reach out to HR for assistance.</span>
+            The deadline to claim your Schbang tee was April 30, 2026.<br>
+            <span style="color: var(--gray-500); font-size: 13px;">Contact HR if you need assistance.</span>
           </div>
         </div>
       `;
@@ -2164,5 +1913,4 @@
   </script>
 
 </body>
-
 </html>
