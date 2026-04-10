@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Schbang Tee — Distribution</title>
+  <meta name="description" content="Schbang Tee distribution — mark collected.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ═══════════════════════════════════════════════════════
+       RESET & VARIABLES
+       ═══════════════════════════════════════════════════════ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+      --off-white: #E8E0D4;
+      --gray-100: #f5f5f5;
+      --gray-200: #e0e0e0;
+      --gray-300: #aaaaaa;
+      --gray-400: #888888;
+      --gray-500: #666666;
+      --gray-600: #444444;
+      --gray-700: #333333;
+      --gray-800: #1a1a1a;
+      --gray-900: #0d0d0d;
+      --green: #22c55e;
+      --red: #ef4444;
+      --amber: #f59e0b;
+
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+
+      --margin: 20px;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (min-width: 768px) { :root { --margin: 32px; } }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.5;
+      overflow-x: hidden;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    ::selection { background: var(--white); color: var(--black); }
+
+    img { display: block; max-width: 100%; height: auto; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+    input { font-family: inherit; }
+
+    /* ═══════════════════════════════════════════════════════
+       LAYOUT
+       ═══════════════════════════════════════════════════════ */
+    .app {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 var(--margin);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       NAVBAR
+       ═══════════════════════════════════════════════════════ */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      margin: 0 calc(-1 * var(--margin));
+      padding: 16px var(--margin);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-title {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .nav-title small {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      color: var(--gray-400);
+      display: block;
+      margin-top: 2px;
+    }
+
+    .nav-logout {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      padding: 8px 14px;
+      border: 1px solid var(--gray-700);
+      border-radius: 6px;
+      transition: all 0.2s var(--ease-out);
+    }
+
+    .nav-logout:hover {
+      color: var(--white);
+      border-color: var(--gray-500);
+    }
+
+    .nav-logout[hidden] { display: none !important; }
+
+    /* ═══════════════════════════════════════════════════════
+       VIEWS
+       ═══════════════════════════════════════════════════════ */
+    .view {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      padding-top: 32px;
+      padding-bottom: 40px;
+      animation: fadeIn 0.3s var(--ease-out);
+    }
+
+    .view.active { display: flex; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       LOGIN VIEW
+       ═══════════════════════════════════════════════════════ */
+    #view-login {
+      justify-content: center;
+      padding-top: 60px;
+    }
+
+    .login-box {
+      max-width: 400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .login-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      line-height: 1;
+      margin-bottom: 8px;
+      text-align: center;
+    }
+
+    .login-sub {
+      font-size: 14px;
+      color: var(--gray-400);
+      margin-bottom: 40px;
+      text-align: center;
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       INPUTS & BUTTONS
+       ═══════════════════════════════════════════════════════ */
+    .input-group { margin-bottom: 16px; }
+
+    .input-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 16px 18px;
+      background: var(--gray-900);
+      border: 1px solid var(--gray-700);
+      border-radius: 10px;
+      color: var(--white);
+      font-family: var(--font-mono);
+      font-size: 15px;
+      letter-spacing: 0.02em;
+      outline: none;
+      transition: border-color 0.2s ease;
+      -webkit-appearance: none;
+    }
+
+    .input-field::placeholder { color: var(--gray-600); }
+    .input-field:focus { border-color: var(--gray-400); }
+
+    .btn-primary {
+      width: 100%;
+      padding: 18px 24px;
+      background: var(--white);
+      color: var(--black);
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border-radius: 10px;
+      transition: all 0.25s var(--ease-out);
+      position: relative;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+
+    .btn-primary:hover:not(:disabled) { background: var(--off-white); }
+    .btn-primary:active:not(:disabled) { transform: scale(0.98); }
+    .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    .btn-primary.loading { color: transparent; }
+    .btn-primary.loading::after {
+      content: '';
+      position: absolute;
+      width: 20px; height: 20px;
+      top: 50%; left: 50%;
+      margin: -10px 0 0 -10px;
+      border: 2px solid transparent;
+      border-top-color: var(--black);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 16px 24px;
+      background: transparent;
+      color: var(--white);
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--gray-700);
+      border-radius: 10px;
+      transition: all 0.2s var(--ease-out);
+      margin-top: 10px;
+    }
+
+    .btn-secondary:hover { border-color: var(--gray-400); }
+    .btn-secondary:active { transform: scale(0.98); }
+
+    .btn-danger {
+      width: 100%;
+      padding: 16px 24px;
+      background: transparent;
+      color: var(--red);
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      border-radius: 10px;
+      transition: all 0.2s var(--ease-out);
+      margin-top: 10px;
+    }
+
+    .btn-danger:hover { border-color: var(--red); background: rgba(239, 68, 68, 0.05); }
+    .btn-danger:active { transform: scale(0.98); }
+
+    .input-error {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: var(--red);
+      margin-top: 12px;
+      display: none;
+      text-align: center;
+    }
+
+    .input-error.visible { display: block; animation: fadeIn 0.25s ease; }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ═══════════════════════════════════════════════════════
+       SEARCH VIEW
+       ═══════════════════════════════════════════════════════ */
+    .search-header {
+      margin-bottom: 20px;
+    }
+
+    .search-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .search-sub {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+    }
+
+    .search-input-wrap {
+      position: relative;
+      margin-bottom: 24px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 18px 48px 18px 48px;
+      background: var(--gray-900);
+      border: 1px solid var(--gray-700);
+      border-radius: 12px;
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      outline: none;
+      transition: border-color 0.2s ease;
+      -webkit-appearance: none;
+    }
+
+    .search-input:focus { border-color: var(--gray-400); }
+    .search-input::placeholder { color: var(--gray-600); }
+
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gray-500);
+      pointer-events: none;
+      font-size: 18px;
+    }
+
+    .search-clear {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: var(--gray-800);
+      border-radius: 50%;
+      color: var(--gray-400);
+      font-size: 14px;
+    }
+
+    .search-clear.visible { display: flex; }
+
+    .search-status {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--gray-500);
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .search-status.empty { color: var(--gray-600); }
+
+    /* Results */
+    .results-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .result-card {
+      background: var(--gray-900);
+      border: 1px solid var(--gray-800);
+      border-radius: 12px;
+      padding: 18px 20px;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .result-card:hover { border-color: var(--gray-600); background: var(--gray-800); }
+    .result-card:active { transform: scale(0.99); }
+
+    .result-card.collected {
+      opacity: 0.55;
+      background: rgba(34, 197, 94, 0.04);
+      border-color: rgba(34, 197, 94, 0.2);
+    }
+
+    .result-card.no-selection {
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .result-main { flex: 1; min-width: 0; }
+
+    .result-name {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.005em;
+      line-height: 1.2;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .result-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gray-500);
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .result-badge {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+
+    .result-fit {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--gray-800);
+      color: var(--gray-200);
+      white-space: nowrap;
+    }
+
+    .result-fit.none {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--amber);
+    }
+
+    .result-status {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+    }
+
+    .result-status.collected { color: var(--green); }
+
+    /* ═══════════════════════════════════════════════════════
+       DETAIL VIEW
+       ═══════════════════════════════════════════════════════ */
+    .detail-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gray-400);
+      margin-bottom: 28px;
+      padding: 8px 0;
+    }
+
+    .detail-back:hover { color: var(--white); }
+
+    .detail-card {
+      background: var(--gray-900);
+      border: 1px solid var(--gray-800);
+      border-radius: 14px;
+      padding: 28px 24px;
+      margin-bottom: 20px;
+    }
+
+    .detail-name {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      word-break: break-word;
+    }
+
+    .detail-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .detail-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .detail-row-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      flex-shrink: 0;
+    }
+
+    .detail-row-value {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--white);
+      text-align: right;
+      word-break: break-word;
+      min-width: 0;
+    }
+
+    .detail-row-value.mono {
+      font-family: var(--font-mono);
+      font-size: 13px;
+    }
+
+    /* Status pill */
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .status-pill.collected {
+      background: rgba(34, 197, 94, 0.12);
+      color: var(--green);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+    }
+
+    .status-pill.pending {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--gray-300);
+      border: 1px solid var(--gray-700);
+    }
+
+    .status-pill.warning {
+      background: rgba(245, 158, 11, 0.12);
+      color: var(--amber);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+
+    .collected-banner {
+      background: rgba(34, 197, 94, 0.08);
+      border: 1px solid rgba(34, 197, 94, 0.25);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .collected-banner .icon {
+      font-size: 24px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .collected-banner .text {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      color: var(--green);
+      margin-bottom: 4px;
+    }
+
+    .collected-banner .time {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gray-400);
+      letter-spacing: 0.04em;
+    }
+
+    .no-selection-banner {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 10px;
+      padding: 16px 18px;
+      margin-bottom: 20px;
+    }
+
+    .no-selection-banner .title {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--amber);
+      margin-bottom: 4px;
+    }
+
+    .no-selection-banner .text {
+      font-size: 13px;
+      color: var(--gray-300);
+      line-height: 1.5;
+    }
+
+    /* Fit & Size picker */
+    .picker-section {
+      background: var(--gray-900);
+      border: 1px solid var(--gray-800);
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 20px;
+    }
+
+    .picker-title {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 4px;
+    }
+
+    .picker-sub {
+      font-size: 13px;
+      color: var(--gray-400);
+      margin-bottom: 20px;
+    }
+
+    .fit-options {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .fit-card {
+      padding: 18px;
+      background: var(--black);
+      border: 2px solid var(--gray-700);
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s var(--ease-out);
+      text-align: center;
+    }
+
+    .fit-card:hover { border-color: var(--gray-500); }
+    .fit-card:active { transform: scale(0.98); }
+
+    .fit-card.selected {
+      border-color: var(--white);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .fit-card .fit-name {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .fit-card .fit-desc {
+      font-size: 11px;
+      color: var(--gray-400);
+    }
+
+    .picker-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray-500);
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+      gap: 8px;
+    }
+
+    .size-btn {
+      padding: 14px 6px;
+      background: var(--black);
+      border: 1px solid var(--gray-700);
+      border-radius: 8px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      text-align: center;
+      transition: all 0.15s var(--ease-out);
+    }
+
+    .size-btn:hover { border-color: var(--gray-400); }
+    .size-btn:active { transform: scale(0.96); }
+
+    .size-btn.selected {
+      background: var(--white);
+      color: var(--black);
+      border-color: var(--white);
+    }
+
+    /* ═══════════════════════════════════════════════════════
+       TOAST
+       ═══════════════════════════════════════════════════════ */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: var(--white);
+      color: var(--black);
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+      transition: transform 0.4s var(--ease-out);
+      z-index: 2000;
+      max-width: calc(100% - 40px);
+      text-align: center;
+    }
+
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.error { background: var(--red); color: var(--white); }
+
+    /* Confirm dialog */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1500;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal.active { display: flex; animation: fadeIn 0.2s ease; }
+
+    .modal-box {
+      background: var(--gray-900);
+      border: 1px solid var(--gray-700);
+      border-radius: 14px;
+      padding: 28px 24px;
+      max-width: 360px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+
+    .modal-text {
+      font-size: 14px;
+      color: var(--gray-300);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-actions > * { flex: 1; margin-top: 0; }
+  </style>
+</head>
+
+<body>
+
+  <div class="app">
+
+    <!-- ═══ NAVBAR ═══ -->
+    <nav class="navbar">
+      <div class="nav-title">
+        SCHBANG TEE
+        <small>DISTRIBUTION</small>
+      </div>
+      <button class="nav-logout" id="btn-logout" hidden onclick="logout()">Logout</button>
+    </nav>
+
+
+    <!-- ═══ LOGIN VIEW ═══ -->
+    <section class="view active" id="view-login">
+      <div class="login-box">
+        <h1 class="login-title">Staff Access</h1>
+        <p class="login-sub">Sign in to mark tees as collected.</p>
+
+        <div class="input-group">
+          <label class="input-label">Username</label>
+          <input type="text" class="input-field" id="inp-username" autocomplete="username" autocapitalize="off" spellcheck="false">
+        </div>
+
+        <div class="input-group">
+          <label class="input-label">Password</label>
+          <input type="password" class="input-field" id="inp-password" autocomplete="current-password">
+        </div>
+
+        <button class="btn-primary" id="btn-login" onclick="handleLogin()">Sign In</button>
+        <div class="input-error" id="err-login"></div>
+      </div>
+    </section>
+
+
+    <!-- ═══ SEARCH VIEW ═══ -->
+    <section class="view" id="view-search">
+      <div class="search-header">
+        <h1 class="search-title">Find Employee</h1>
+        <p class="search-sub">Search by name, email, or employee code</p>
+      </div>
+
+      <div class="search-input-wrap">
+        <span class="search-icon">⌕</span>
+        <input
+          type="text"
+          class="search-input"
+          id="inp-search"
+          placeholder="Type at least 2 characters..."
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false">
+        <button class="search-clear" id="btn-clear" onclick="clearSearch()">✕</button>
+      </div>
+
+      <div id="search-status" class="search-status empty">Start typing to search</div>
+
+      <div class="results-list" id="results-list"></div>
+    </section>
+
+
+    <!-- ═══ DETAIL VIEW ═══ -->
+    <section class="view" id="view-detail">
+      <button class="detail-back" onclick="goToSearch()">← Back to search</button>
+
+      <div id="detail-content"></div>
+    </section>
+
+  </div>
+
+
+  <!-- ═══ TOAST ═══ -->
+  <div class="toast" id="toast"></div>
+
+
+  <!-- ═══ CONFIRM MODAL ═══ -->
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <div class="modal-title" id="modal-title"></div>
+      <div class="modal-text" id="modal-text"></div>
+      <div class="modal-actions">
+        <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn-primary" id="modal-confirm">Confirm</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    // ═══════════════════════════════════════════════════════
+    // CONFIGURATION
+    // ═══════════════════════════════════════════════════════
+
+    // ⚠️ PASTE YOUR DEPLOYED APPS SCRIPT URL HERE
+    // (This is the SAME URL from your main index.html after you redeploy
+    //  the updated Code.gs — it adds new actions without breaking old ones.)
+    const API_URL = 'https://script.google.com/macros/s/AKfycbz7WNfTRKgp_A-HZq25FV-zVKfYoRWoyuQWX89PLSxHnqlH3Gqjc-CEBPI1DQhjFHL-/exec';
+
+    // ═══════════════════════════════════════════════════════
+    // STATE
+    // ═══════════════════════════════════════════════════════
+    let adminToken = sessionStorage.getItem('schbang_admin_token') || '';
+    let currentPerson = null;
+    let searchDebounce = null;
+    let pickerState = { fit: '', size: '' };
+
+    // ═══════════════════════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════════════════════
+    if (adminToken) {
+      showView('search');
+      document.getElementById('btn-logout').hidden = false;
+      setTimeout(() => document.getElementById('inp-search').focus(), 100);
+    } else {
+      showView('login');
+      setTimeout(() => document.getElementById('inp-username').focus(), 100);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // API
+    // ═══════════════════════════════════════════════════════
+    async function apiCall(params) {
+      const url = API_URL + '?' + new URLSearchParams(params).toString();
+      try {
+        const res = await fetch(url, { redirect: 'follow' });
+        return await res.json();
+      } catch (err) {
+        throw new Error('Network error. Check your connection.');
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // VIEW MANAGEMENT
+    // ═══════════════════════════════════════════════════════
+    function showView(name) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.getElementById('view-' + name).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function goToSearch() {
+      currentPerson = null;
+      showView('search');
+      document.getElementById('inp-search').focus();
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // TOAST
+    // ═══════════════════════════════════════════════════════
+    let toastTimer;
+    function toast(msg, isError = false) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.classList.toggle('error', isError);
+      el.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => el.classList.remove('show'), 2800);
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // MODAL
+    // ═══════════════════════════════════════════════════════
+    function openModal(title, text, onConfirm, confirmLabel = 'Confirm') {
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-text').textContent = text;
+      const btn = document.getElementById('modal-confirm');
+      btn.textContent = confirmLabel;
+      btn.onclick = () => { closeModal(); onConfirm(); };
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+    }
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.id === 'modal') closeModal();
+    });
+
+    // ═══════════════════════════════════════════════════════
+    // LOGIN
+    // ═══════════════════════════════════════════════════════
+    async function handleLogin() {
+      const username = document.getElementById('inp-username').value.trim();
+      const password = document.getElementById('inp-password').value;
+      const btn = document.getElementById('btn-login');
+      const err = document.getElementById('err-login');
+
+      err.classList.remove('visible');
+
+      if (!username || !password) {
+        err.textContent = 'Enter both username and password.';
+        err.classList.add('visible');
+        return;
+      }
+
+      btn.classList.add('loading');
+      btn.disabled = true;
+
+      try {
+        const data = await apiCall({
+          action: 'adminLogin',
+          username: username,
+          password: password
+        });
+
+        if (data.success) {
+          adminToken = data.token;
+          sessionStorage.setItem('schbang_admin_token', adminToken);
+          document.getElementById('inp-password').value = '';
+          document.getElementById('btn-logout').hidden = false;
+          showView('search');
+          setTimeout(() => document.getElementById('inp-search').focus(), 100);
+        } else {
+          err.textContent = data.error || 'Invalid credentials.';
+          err.classList.add('visible');
+        }
+      } catch (e) {
+        err.textContent = e.message;
+        err.classList.add('visible');
+      }
+
+      btn.classList.remove('loading');
+      btn.disabled = false;
+    }
+
+    function logout() {
+      adminToken = '';
+      sessionStorage.removeItem('schbang_admin_token');
+      document.getElementById('btn-logout').hidden = true;
+      document.getElementById('inp-username').value = '';
+      document.getElementById('inp-password').value = '';
+      document.getElementById('inp-search').value = '';
+      document.getElementById('results-list').innerHTML = '';
+      document.getElementById('search-status').textContent = 'Start typing to search';
+      document.getElementById('search-status').className = 'search-status empty';
+      document.getElementById('search-status').style.display = 'block';
+      showView('login');
+    }
+
+    document.getElementById('inp-password').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') handleLogin();
+    });
+
+    // ═══════════════════════════════════════════════════════
+    // SEARCH
+    // ═══════════════════════════════════════════════════════
+    const searchInput = document.getElementById('inp-search');
+    const clearBtn = document.getElementById('btn-clear');
+
+    searchInput.addEventListener('input', (e) => {
+      const q = e.target.value.trim();
+      clearBtn.classList.toggle('visible', q.length > 0);
+
+      clearTimeout(searchDebounce);
+
+      if (q.length === 0) {
+        showSearchStatus('Start typing to search', 'empty');
+        document.getElementById('results-list').innerHTML = '';
+        return;
+      }
+
+      if (q.length < 2) {
+        showSearchStatus('Type at least 2 characters', 'empty');
+        document.getElementById('results-list').innerHTML = '';
+        return;
+      }
+
+      searchDebounce = setTimeout(() => runSearch(q), 280);
+    });
+
+    function clearSearch() {
+      searchInput.value = '';
+      clearBtn.classList.remove('visible');
+      showSearchStatus('Start typing to search', 'empty');
+      document.getElementById('results-list').innerHTML = '';
+      searchInput.focus();
+    }
+
+    function showSearchStatus(msg, cls = '') {
+      const el = document.getElementById('search-status');
+      el.textContent = msg;
+      el.className = 'search-status ' + cls;
+      el.style.display = 'block';
+    }
+
+    async function runSearch(query) {
+      showSearchStatus('Searching...', '');
+
+      try {
+        const data = await apiCall({
+          action: 'search',
+          token: adminToken,
+          query: query
+        });
+
+        if (!data.success) {
+          if (data.error === 'AUTH') {
+            toast('Session expired. Please sign in again.', true);
+            logout();
+            return;
+          }
+          showSearchStatus(data.error || 'Search failed', '');
+          return;
+        }
+
+        renderResults(data.results || []);
+      } catch (e) {
+        showSearchStatus(e.message, '');
+      }
+    }
+
+    function renderResults(results) {
+      const listEl = document.getElementById('results-list');
+      const statusEl = document.getElementById('search-status');
+
+      if (results.length === 0) {
+        showSearchStatus('No matches found', 'empty');
+        listEl.innerHTML = '';
+        return;
+      }
+
+      statusEl.style.display = 'none';
+
+      listEl.innerHTML = results.map((r, i) => {
+        const hasFit = r.fit && r.size;
+        const isCollected = r.collected === 'YES';
+
+        let badgeHtml = '';
+        if (isCollected) {
+          badgeHtml = `
+            <div class="result-badge">
+              <span class="result-fit">${escapeHtml(r.fit)} ${escapeHtml(r.size)}</span>
+              <span class="result-status collected">✓ Collected</span>
+            </div>
+          `;
+        } else if (hasFit) {
+          badgeHtml = `
+            <div class="result-badge">
+              <span class="result-fit">${escapeHtml(r.fit)} ${escapeHtml(r.size)}</span>
+              <span class="result-status">Pending</span>
+            </div>
+          `;
+        } else {
+          badgeHtml = `
+            <div class="result-badge">
+              <span class="result-fit none">No selection</span>
+              <span class="result-status">Pending</span>
+            </div>
+          `;
+        }
+
+        const cardClass = isCollected
+          ? 'result-card collected'
+          : (hasFit ? 'result-card' : 'result-card no-selection');
+
+        return `
+          <div class="${cardClass}" data-idx="${i}" onclick="openDetail(${i})">
+            <div class="result-main">
+              <div class="result-name">${escapeHtml(r.name)}</div>
+              <div class="result-meta">${escapeHtml(r.empCode)} · ${escapeHtml(r.email)}</div>
+            </div>
+            ${badgeHtml}
+          </div>
+        `;
+      }).join('');
+
+      // Cache results
+      window._lastResults = results;
+    }
+
+    function openDetail(idx) {
+      const person = window._lastResults[idx];
+      if (!person) return;
+      currentPerson = person;
+      renderDetail();
+      showView('detail');
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // DETAIL VIEW
+    // ═══════════════════════════════════════════════════════
+    function renderDetail() {
+      const p = currentPerson;
+      if (!p) return;
+
+      const hasFit = p.fit && p.size;
+      const isCollected = p.collected === 'YES';
+      pickerState = { fit: '', size: '' };
+
+      let html = `
+        <div class="detail-card">
+          <div class="detail-name">${escapeHtml(p.name)}</div>
+          <div class="detail-rows">
+            <div class="detail-row">
+              <span class="detail-row-label">Emp Code</span>
+              <span class="detail-row-value mono">${escapeHtml(p.empCode)}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-row-label">Email</span>
+              <span class="detail-row-value mono">${escapeHtml(p.email)}</span>
+            </div>
+            ${p.location ? `
+              <div class="detail-row">
+                <span class="detail-row-label">Location</span>
+                <span class="detail-row-value">${escapeHtml(p.location)}</span>
+              </div>` : ''}
+            <div class="detail-row">
+              <span class="detail-row-label">Selection</span>
+              <span class="detail-row-value">
+                ${hasFit
+                  ? `<span class="status-pill pending">${escapeHtml(p.fit)} · ${escapeHtml(p.size)}</span>`
+                  : `<span class="status-pill warning">Not selected</span>`}
+              </span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-row-label">Status</span>
+              <span class="detail-row-value">
+                ${isCollected
+                  ? `<span class="status-pill collected">✓ Collected</span>`
+                  : `<span class="status-pill pending">Pending</span>`}
+              </span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Collected banner
+      if (isCollected) {
+        html += `
+          <div class="collected-banner">
+            <span class="icon">✓</span>
+            <div class="text">Already collected</div>
+            <div class="time">${p.collectedOn ? 'on ' + escapeHtml(formatDate(p.collectedOn)) : ''}</div>
+          </div>
+          <button class="btn-danger" onclick="confirmUndo()">Undo — Mark as Not Collected</button>
+        `;
+      }
+      // No selection → show picker
+      else if (!hasFit) {
+        html += `
+          <div class="no-selection-banner">
+            <div class="title">⚠ No fit or size selected</div>
+            <div class="text">This person hasn't chosen a fit and size yet. Pick one below on their behalf, then mark collected.</div>
+          </div>
+
+          <div class="picker-section">
+            <div class="picker-title">Pick Fit & Size</div>
+            <div class="picker-sub">Select on behalf of the employee</div>
+
+            <span class="picker-label">Fit</span>
+            <div class="fit-options">
+              <div class="fit-card" data-fit="Regular" onclick="pickFit('Regular')">
+                <div class="fit-name">Regular</div>
+                <div class="fit-desc">Classic fit</div>
+              </div>
+              <div class="fit-card" data-fit="Oversized" onclick="pickFit('Oversized')">
+                <div class="fit-name">Oversized</div>
+                <div class="fit-desc">Drop-shoulder</div>
+              </div>
+            </div>
+
+            <div id="size-picker-wrap" style="display:none;">
+              <span class="picker-label">Size</span>
+              <div class="size-grid" id="size-picker-grid"></div>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="btn-save-and-collect" disabled onclick="saveAndCollect()">
+            Save Selection & Mark Collected
+          </button>
+        `;
+      }
+      // Has fit, not collected → show collect button
+      else {
+        html += `
+          <button class="btn-primary" onclick="confirmCollect()">Mark Collected</button>
+          <button class="btn-secondary" onclick="openChangeSelection()">Change Fit or Size</button>
+        `;
+      }
+
+      document.getElementById('detail-content').innerHTML = html;
+    }
+
+    // ─── Fit & Size Picker ─────────────────────────────────
+    function pickFit(fit) {
+      pickerState.fit = fit;
+      pickerState.size = '';
+      document.querySelectorAll('.fit-card').forEach(c => {
+        c.classList.toggle('selected', c.dataset.fit === fit);
+      });
+
+      // Render sizes
+      const sizes = fit === 'Regular'
+        ? ['XS', 'S', 'M', 'L', 'XL', 'XXL']
+        : ['XS', 'S', 'M', 'L', 'XL', 'XXL', '3XL'];
+
+      const grid = document.getElementById('size-picker-grid');
+      grid.innerHTML = sizes.map(s =>
+        `<button class="size-btn" data-size="${s}" onclick="pickSize('${s}')">${s}</button>`
+      ).join('');
+
+      document.getElementById('size-picker-wrap').style.display = 'block';
+      updatePickerButton();
+    }
+
+    function pickSize(size) {
+      pickerState.size = size;
+      document.querySelectorAll('.size-btn').forEach(b => {
+        b.classList.toggle('selected', b.dataset.size === size);
+      });
+      updatePickerButton();
+    }
+
+    function updatePickerButton() {
+      const btn = document.getElementById('btn-save-and-collect');
+      if (!btn) return;
+      const ready = pickerState.fit && pickerState.size;
+      btn.disabled = !ready;
+      if (ready) {
+        btn.textContent = `Save ${pickerState.fit} ${pickerState.size} & Mark Collected`;
+      }
+    }
+
+    // ─── Change selection (for already-selected, not yet collected) ───
+    function openChangeSelection() {
+      const p = currentPerson;
+      pickerState = { fit: '', size: '' };
+
+      const html = `
+        <div class="detail-card">
+          <div class="detail-name">${escapeHtml(p.name)}</div>
+          <div class="detail-rows">
+            <div class="detail-row">
+              <span class="detail-row-label">Emp Code</span>
+              <span class="detail-row-value mono">${escapeHtml(p.empCode)}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-row-label">Current</span>
+              <span class="detail-row-value">
+                <span class="status-pill pending">${escapeHtml(p.fit)} · ${escapeHtml(p.size)}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="picker-section">
+          <div class="picker-title">Change Fit & Size</div>
+          <div class="picker-sub">This will overwrite the existing selection.</div>
+
+          <span class="picker-label">Fit</span>
+          <div class="fit-options">
+            <div class="fit-card" data-fit="Regular" onclick="pickFit('Regular')">
+              <div class="fit-name">Regular</div>
+              <div class="fit-desc">Classic fit</div>
+            </div>
+            <div class="fit-card" data-fit="Oversized" onclick="pickFit('Oversized')">
+              <div class="fit-name">Oversized</div>
+              <div class="fit-desc">Drop-shoulder</div>
+            </div>
+          </div>
+
+          <div id="size-picker-wrap" style="display:none;">
+            <span class="picker-label">Size</span>
+            <div class="size-grid" id="size-picker-grid"></div>
+          </div>
+        </div>
+
+        <button class="btn-primary" id="btn-save-and-collect" disabled onclick="saveOnly()">
+          Save Selection
+        </button>
+        <button class="btn-secondary" onclick="renderDetail()">Cancel</button>
+      `;
+
+      document.getElementById('detail-content').innerHTML = html;
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // ACTIONS
+    // ═══════════════════════════════════════════════════════
+    function confirmCollect() {
+      const p = currentPerson;
+      openModal(
+        'Mark as collected?',
+        `${p.name} — ${p.fit} ${p.size}`,
+        () => doCollect(),
+        'Mark Collected'
+      );
+    }
+
+    async function doCollect() {
+      const p = currentPerson;
+      try {
+        const data = await apiCall({
+          action: 'markCollected',
+          token: adminToken,
+          empCode: p.empCode
+        });
+
+        if (data.success) {
+          toast('✓ Marked collected');
+          currentPerson.collected = 'YES';
+          currentPerson.collectedOn = data.collectedOn;
+          renderDetail();
+        } else {
+          if (data.error === 'AUTH') { toast('Session expired', true); logout(); return; }
+          toast(data.error || 'Failed', true);
+        }
+      } catch (e) {
+        toast(e.message, true);
+      }
+    }
+
+    function confirmUndo() {
+      const p = currentPerson;
+      openModal(
+        'Undo collection?',
+        `Mark ${p.name} as NOT collected again?`,
+        () => doUndo(),
+        'Undo'
+      );
+    }
+
+    async function doUndo() {
+      const p = currentPerson;
+      try {
+        const data = await apiCall({
+          action: 'undoCollected',
+          token: adminToken,
+          empCode: p.empCode
+        });
+
+        if (data.success) {
+          toast('Reverted to not collected');
+          currentPerson.collected = 'NO';
+          currentPerson.collectedOn = '';
+          renderDetail();
+        } else {
+          if (data.error === 'AUTH') { toast('Session expired', true); logout(); return; }
+          toast(data.error || 'Failed', true);
+        }
+      } catch (e) {
+        toast(e.message, true);
+      }
+    }
+
+    async function saveAndCollect() {
+      if (!pickerState.fit || !pickerState.size) return;
+      const p = currentPerson;
+      const btn = document.getElementById('btn-save-and-collect');
+      btn.classList.add('loading');
+      btn.disabled = true;
+
+      try {
+        // 1. Save selection
+        const sel = await apiCall({
+          action: 'adminUpdateSelection',
+          token: adminToken,
+          empCode: p.empCode,
+          fit: pickerState.fit,
+          size: pickerState.size
+        });
+
+        if (!sel.success) {
+          if (sel.error === 'AUTH') { toast('Session expired', true); logout(); return; }
+          toast(sel.error || 'Failed to save selection', true);
+          btn.classList.remove('loading');
+          btn.disabled = false;
+          return;
+        }
+
+        currentPerson.fit = pickerState.fit;
+        currentPerson.size = pickerState.size;
+
+        // 2. Mark collected
+        const col = await apiCall({
+          action: 'markCollected',
+          token: adminToken,
+          empCode: p.empCode
+        });
+
+        if (col.success) {
+          toast('✓ Selection saved & collected');
+          currentPerson.collected = 'YES';
+          currentPerson.collectedOn = col.collectedOn;
+          renderDetail();
+        } else {
+          toast(col.error || 'Saved but could not mark collected', true);
+          renderDetail();
+        }
+      } catch (e) {
+        toast(e.message, true);
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
+    }
+
+    async function saveOnly() {
+      if (!pickerState.fit || !pickerState.size) return;
+      const p = currentPerson;
+      const btn = document.getElementById('btn-save-and-collect');
+      btn.classList.add('loading');
+      btn.disabled = true;
+
+      try {
+        const data = await apiCall({
+          action: 'adminUpdateSelection',
+          token: adminToken,
+          empCode: p.empCode,
+          fit: pickerState.fit,
+          size: pickerState.size
+        });
+
+        if (data.success) {
+          toast('✓ Selection updated');
+          currentPerson.fit = pickerState.fit;
+          currentPerson.size = pickerState.size;
+          renderDetail();
+        } else {
+          if (data.error === 'AUTH') { toast('Session expired', true); logout(); return; }
+          toast(data.error || 'Failed', true);
+          btn.classList.remove('loading');
+          btn.disabled = false;
+        }
+      } catch (e) {
+        toast(e.message, true);
+        btn.classList.remove('loading');
+        btn.disabled = false;
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════
+    // HELPERS
+    // ═══════════════════════════════════════════════════════
+    function escapeHtml(str) {
+      if (str == null) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function formatDate(iso) {
+      if (!iso) return '';
+      try {
+        const d = new Date(iso);
+        if (isNaN(d)) return iso;
+        const opts = { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' };
+        return d.toLocaleString('en-IN', opts);
+      } catch (e) { return iso; }
+    }
+  </script>
+
+</body>
+</html>
