@@ -608,7 +608,6 @@
       color: var(--gray-400);
       border-bottom: 1px solid var(--gray-800);
       white-space: nowrap;
-      width: 25%;
     }
 
     .chart-table td {
@@ -1225,16 +1224,11 @@
     </div>
 
     <div class="chart-table-wrap reveal reveal-delay-2">
-      <table class="chart-table" id="size-table">
-        <thead>
-          <tr>
-            <th>Size</th>
-            <th>Chest (in)</th>
-            <th>Front Length (in)</th>
-            <th>Across Shoulder (in)</th>
-          </tr>
-        </thead>
-        <tbody id="size-tbody">
+    <table class="chart-table" id="size-table">
+      <thead id="size-thead">
+        <!-- Populated by JS -->
+      </thead>
+      <tbody id="size-tbody">
           <!-- Populated by JS -->
         </tbody>
       </table>
@@ -1419,14 +1413,14 @@
     // SIZE CHART DATA
     // ═══════════════════════════════════════════════════════
     const SIZE_DATA = {
-      regular: [
-        { size: 'XS', chest: '36.0', length: '27.0', shoulder: '16.5' },
-        { size: 'S',  chest: '38.0', length: '27.0', shoulder: '17.0' },
-        { size: 'M',  chest: '40.0', length: '27.0', shoulder: '17.5' },
-        { size: 'L',  chest: '42.0', length: '27.5', shoulder: '18.0' },
-        { size: 'XL', chest: '44.0', length: '27.5', shoulder: '18.5' },
-        { size: 'XXL',chest: '46.0', length: '27.5', shoulder: '19.0' },
-      ],
+      const SIZE_DATA = {
+        regular: [
+          { size: 'S', body: '36', chest: '36', length: '26', sleeve: '7.5' },
+          { size: 'M', body: '38', chest: '38', length: '27', sleeve: '8' },
+          { size: 'L', body: '40', chest: '40', length: '28', sleeve: '8.5' },
+          { size: 'XL', body: '42', chest: '42', length: '29', sleeve: '9' },
+          { size: 'XXL', body: '44', chest: '44', length: '30', sleeve: '9.5' },
+        ],
       oversized: [
         { size: 'XS', chest: '36.0', length: '26.0', shoulder: '16.5' },
         { size: 'S',  chest: '38.0', length: '26.0', shoulder: '17.0' },
@@ -1544,17 +1538,47 @@
     // SIZE CHART
     // ═══════════════════════════════════════════════════════
     function renderChart() {
+      const thead = document.getElementById('size-thead');
       const tbody = document.getElementById('size-tbody');
       const data = SIZE_DATA[currentChart];
-
-      tbody.innerHTML = data.map(row => `
-        <tr>
-          <td class="size-cell">${row.size}</td>
-          <td>${row.chest}"</td>
-          <td>${row.length}"</td>
-          <td>${row.shoulder}"</td>
-        </tr>
-      `).join('');
+    
+      if (currentChart === 'regular') {
+        thead.innerHTML = `
+          <tr>
+            <th>Size</th>
+            <th>Body (in)</th>
+            <th>Chest (in)</th>
+            <th>Length (in)</th>
+            <th>Sleeve (in)</th>
+          </tr>
+        `;
+        tbody.innerHTML = data.map(row => `
+          <tr>
+            <td class="size-cell">${row.size}</td>
+            <td>${row.body}"</td>
+            <td>${row.chest}"</td>
+            <td>${row.length}"</td>
+            <td>${row.sleeve}"</td>
+          </tr>
+        `).join('');
+      } else {
+        thead.innerHTML = `
+          <tr>
+            <th>Size</th>
+            <th>Chest (in)</th>
+            <th>Front Length (in)</th>
+            <th>Across Shoulder (in)</th>
+          </tr>
+        `;
+        tbody.innerHTML = data.map(row => `
+          <tr>
+            <td class="size-cell">${row.size}</td>
+            <td>${row.chest}"</td>
+            <td>${row.length}"</td>
+            <td>${row.shoulder}"</td>
+          </tr>
+        `).join('');
+      }
     }
 
     function setChart(chart) {
